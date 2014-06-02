@@ -22,7 +22,7 @@ Specify SEO content as ruby code.  For example, `config/initializers/seory.rb`
 
 ```ruby
 # Specify SEO content based on `controller#action` rule
-match %w[products#popular], {
+match %w[products#popular products#new_release], {
   title:    'Great products | My Great Site[MGS]'
   desc:     'A lot of greate products'
 
@@ -36,7 +36,7 @@ match 'brands#show' {
   title: -> { assign(:brand).name }
 }
 
-# Lookup definition with conntroller context
+# Custom lookup rule with controller
 match ->(controller) { controller.params[:page].to_i == 1 }, {
   keywords: -> do
     search = assign(:search_object)
@@ -60,14 +60,22 @@ default do
 end
 ```
 
-Then use in your application.
+Then we can use seory in your application.
 ```ruby
-# [TODO] nice integration
 module ApplicationHelper
-  def seory
-    @seory ||= Seory::Runtime.new(Seory::Definition.lookup(controller), controller)
-  end
+
+  # provides seory() method,
+  # which returns Seory::Runtime object with configured
+  include Seory::Helper
 end
+
+```haml
+%html
+  %head
+    %title= seory.title
+    ...
+  %body
+    %h1= seory.h1
 ```
 
 ## Contributing
