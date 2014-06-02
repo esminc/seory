@@ -6,7 +6,18 @@ module Seory
     end
 
     def title
-      @definition.definition_for(:title)
+      case definition = @definition.definition_for(:title)
+      when String
+        definition
+      when ->(o) { o.respond_to?(:call) }
+        instance_exec(&definition)
+      else
+        raise 'BUG'
+      end
+    end
+
+    def action_name
+      @controller.action_name
     end
   end
 end

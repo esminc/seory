@@ -18,4 +18,15 @@ describe Seory::Runtime do
       specify { expect(seory.title).to eq 'A title' }
     end
   end
+
+  context 'controller based dynamic content' do
+    before do
+      allow(controller).to receive(:action_name) { 'edit' }
+      allow(definition).to receive(:definition_for).with(:title) { -> { "#{action_name.upcase} | My Site" } }
+    end
+
+    describe '#titie' do
+      specify { expect(seory.title).to eq 'EDIT | My Site' }
+    end
+  end
 end
