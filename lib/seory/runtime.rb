@@ -6,7 +6,7 @@ module Seory
     end
 
     def title
-      'A title'
+      @definition.definition_for(:title)
     end
   end
 end

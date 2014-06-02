@@ -13,7 +13,9 @@ describe Seory::Runtime do
   end
 
   let(:definition) do
-    double('definition')
+    double('definition').tap do |d|
+      allow(d).to receive(:definition_for).with(:title) { 'A title' }
+    end
   end
 
   describe '#title' do
