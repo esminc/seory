@@ -4,8 +4,8 @@ module Seory
       @definitions = {}
     end
 
-    def define(name, value)
-      @definitions[name] = value
+    def define(name, value = nil, &block)
+      @definitions[name] = block_given? ? block : value
     end
 
     def definition_for(name)
