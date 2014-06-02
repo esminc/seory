@@ -6,19 +6,16 @@ describe Seory::Runtime do
     Seory::Runtime.new(definition, controller)
   end
 
-  let(:controller) do
-    double('controller').tap do |c|
+  let(:controller) { double('controller') }
+  let(:definition) { double('definition') }
 
+  context 'static content' do
+    before do
+      allow(definition).to receive(:definition_for).with(:title) { 'A title' }
     end
-  end
 
-  let(:definition) do
-    double('definition').tap do |d|
-      allow(d).to receive(:definition_for).with(:title) { 'A title' }
+    describe '#title' do
+      specify { expect(seory.title).to eq 'A title' }
     end
-  end
-
-  describe '#title' do
-    specify { expect(seory.title).to eq 'A title' }
   end
 end
