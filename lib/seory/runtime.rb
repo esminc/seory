@@ -5,7 +5,7 @@ module Seory
   class Runtime
     delegate :action_name, to: :controller
 
-    CONTENTS = %w[title h1 h2 meta_desc meta_keywords canonical_url image_url].map(&:to_sym)
+    CONTENTS = %w[title h1 h2 meta_description meta_keywords canonical_url image_url].map(&:to_sym)
 
     attr_reader :controller
 
