@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["moro"]
   spec.email         = ["moronatural@gmail.com"]
   spec.summary       = %q{SEO contents manager for Rails.}
-  spec.description   = %q{SEO contents manager for Rails.}
+  spec.description   = %q{Manage SEO contets in Rails app. based on controller, action and more complex context.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
