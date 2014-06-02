@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'seory/runtime'
+require 'seory/definition'
 
 describe Seory::Runtime do
   let(:seory) do
@@ -7,12 +8,12 @@ describe Seory::Runtime do
   end
 
   let(:controller) { double('controller') }
-  let(:definition) { double('definition') }
+  let(:definition) { Seory::Definition.new }
 
   context 'static content' do
     before do
-      allow(definition).to receive(:definition_for).with(:title) { 'A title' }
-      allow(definition).to receive(:definition_for).with(:h1) { 'Most importatnt HEADER 1' }
+      definition.define(:title, 'A title')
+      definition.define(:h1,    'Most importatnt HEADER 1')
     end
 
     describe '#title' do
@@ -27,7 +28,8 @@ describe Seory::Runtime do
   context 'controller based dynamic content' do
     before do
       allow(controller).to receive(:action_name) { 'edit' }
-      allow(definition).to receive(:definition_for).with(:title) { -> { "#{action_name.upcase} | My Site" } }
+
+      definition.define(:title) { "#{action_name.upcase} | My Site" }
     end
 
     describe '#titie' do
