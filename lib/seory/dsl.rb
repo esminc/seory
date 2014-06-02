@@ -14,7 +14,7 @@ module Seory
     end
 
     Seory::Runtime::CONTENTS.each do |name|
-      define_method(name) do |val, &block|
+      define_method(name) do |val = nil, &block|
         @definition.define(name, val, &block)
       end
     end
