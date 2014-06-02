@@ -8,7 +8,7 @@ describe Seory::Runtime do
   end
 
   let(:controller) { double('controller') }
-  let(:definition) { Seory::Definition.new }
+  let(:definition) { Seory::Definition.new(:default) }
 
   context 'static content' do
     before do
