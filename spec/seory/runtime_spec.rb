@@ -12,10 +12,15 @@ describe Seory::Runtime do
   context 'static content' do
     before do
       allow(definition).to receive(:definition_for).with(:title) { 'A title' }
+      allow(definition).to receive(:definition_for).with(:h1) { 'Most importatnt HEADER 1' }
     end
 
     describe '#title' do
       specify { expect(seory.title).to eq 'A title' }
+    end
+
+    describe '#h1' do
+      specify { expect(seory.h1).to eq 'Most importatnt HEADER 1' }
     end
   end
 
