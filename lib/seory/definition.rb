@@ -1,6 +1,7 @@
 module Seory
   class Definition
-    def initialize
+    def initialize(match = nil)
+      @match       = match
       @definitions = {}
     end
 
@@ -10,6 +11,18 @@ module Seory
 
     def definition_for(name)
       @definitions[name]
+    end
+
+    def match?(controller)
+      return true if @match == :default
+
+      @match == action_slug(controller)
+    end
+
+    private
+
+    def action_slug(controller)
+      [controller.controller_name, controller.action_name].join('#')
     end
   end
 end
