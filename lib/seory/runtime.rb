@@ -1,5 +1,12 @@
+# TODO move somewhere
+require 'active_support/all'
+
 module Seory
   class Runtime
+    delegate :action_name, to: :controller
+
+    attr_reader :controller
+
     def initialize(definition, controller)
       @definition = definition
       @controller = controller
@@ -14,10 +21,6 @@ module Seory
       else
         raise 'BUG'
       end
-    end
-
-    def action_name
-      @controller.action_name
     end
   end
 end
