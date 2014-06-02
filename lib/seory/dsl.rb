@@ -1,4 +1,4 @@
-require 'seory/definition'
+require 'seory/page_contents'
 require 'seory/runtime'
 
 module Seory

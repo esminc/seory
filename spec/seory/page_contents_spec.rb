@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'seory/definition'
+require 'seory/page_contents'
 
 describe Seory::PageContents do
   specify 'cant define without condition' do
