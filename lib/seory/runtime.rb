@@ -9,9 +9,9 @@ module Seory
 
     attr_reader :controller
 
-    def initialize(definition, controller)
-      @definition = definition
-      @controller = controller
+    def initialize(page_contents, controller)
+      @page_contents = page_contents
+      @controller    = controller
     end
 
     CONTENTS.each do |name|
@@ -21,11 +21,11 @@ module Seory
     private
 
     def calculate_content_for(name)
-      case definition = @definition.definition_for(name)
+      case page_content = @page_contents.content_for(name)
       when String
-        definition
+        page_content
       when ->(o) { o.respond_to?(:call) }
-        instance_exec(&definition)
+        instance_exec(&page_content)
       else
         raise 'BUG'
       end

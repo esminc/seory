@@ -4,16 +4,16 @@ require 'seory/definition'
 
 describe Seory::Runtime do
   let(:seory) do
-    Seory::Runtime.new(definition, controller)
+    Seory::Runtime.new(page_contents, controller)
   end
 
   let(:controller) { double('controller') }
-  let(:definition) { Seory::Definition.new(:default) }
+  let(:page_contents) { Seory::PageContents.new(:default) }
 
   context 'static content' do
     before do
-      definition.define(:title, 'A title')
-      definition.define(:h1,    'Most importatnt HEADER 1')
+      page_contents.define(:title, 'A title')
+      page_contents.define(:h1,    'Most importatnt HEADER 1')
     end
 
     describe '#title' do
@@ -29,7 +29,7 @@ describe Seory::Runtime do
     before do
       allow(controller).to receive(:action_name) { 'edit' }
 
-      definition.define(:title) { "#{action_name.upcase} | My Site" }
+      page_contents.define(:title) { "#{action_name.upcase} | My Site" }
     end
 
     describe '#titie' do

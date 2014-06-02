@@ -4,20 +4,20 @@ require 'active_support/all'
 module Seory
   class EmptyCondition < ::Seory::Error; end
 
-  class Definition
+  class PageContents
     def initialize(*conditions, &block)
       @conditions  = block_given? ? block : conditions
       raise EmptyCondition if @conditions.blank?
 
-      @definitions = {}
+      @contents = {}
     end
 
     def define(name, value = nil, &block)
-      @definitions[name] = block_given? ? block : value
+      @contents[name] = block_given? ? block : value
     end
 
-    def definition_for(name)
-      @definitions[name]
+    def content_for(name)
+      @contents[name]
     end
 
     def match?(controller)

@@ -1,14 +1,14 @@
 require 'spec_helper'
 require 'seory/definition'
 
-describe Seory::Definition do
+describe Seory::PageContents do
   specify 'cant define without condition' do
-    expect { Seory::Definition.new }.to raise_error(Seory::EmptyCondition)
+    expect { Seory::PageContents.new }.to raise_error(Seory::EmptyCondition)
   end
 
-  context 'content definition' do
+  context 'content PageContents' do
     let(:seory_def) do
-      Seory::Definition.new(:default)
+      Seory::PageContents.new(:default)
     end
 
     context 'define static content' do
@@ -16,7 +16,7 @@ describe Seory::Definition do
         seory_def.define(:title, 'A title')
       end
 
-      specify { expect(seory_def.definition_for(:title)).to eq 'A title' }
+      specify { expect(seory_def.content_for(:title)).to eq 'A title' }
     end
 
     context 'define dynamic content' do
@@ -24,13 +24,13 @@ describe Seory::Definition do
         seory_def.define(:title) { 'A title' }
       end
 
-      specify { expect(seory_def.definition_for(:title).call).to eq 'A title' }
+      specify { expect(seory_def.content_for(:title).call).to eq 'A title' }
     end
   end
 
   context 'lookup' do
     def init_with(*args, &block)
-      Seory::Definition.new(*args, &block)
+      Seory::PageContents.new(*args, &block)
     end
 
     let(:controller) { double('controller', controller_name: 'people', action_name: 'index') }
@@ -53,9 +53,9 @@ describe Seory::Definition do
       end
 
       specify do
-        definition = init_with {|c| c.controller_name == 'people' }
+        page_contents = init_with {|c| c.controller_name == 'people' }
 
-        expect(definition.match?(controller)).to be_truthy
+        expect(page_contents.match?(controller)).to be_truthy
       end
     end
   end

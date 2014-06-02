@@ -2,20 +2,20 @@ require 'seory/definition'
 require 'seory/runtime'
 
 module Seory
-  class DefinitionBuilder
+  class PageContentsBuilder
     def initialize(*conditions)
-      @definition = Definition.new(*conditions)
+      @page_contents = PageContents.new(*conditions)
     end
 
     def build!(&block)
       instance_exec(&block)
 
-      @definition
+      @page_contents
     end
 
     Seory::Runtime::CONTENTS.each do |name|
       define_method(name) do |val = nil, &block|
-        @definition.define(name, val, &block)
+        @page_contents.define(name, val, &block)
       end
     end
   end
@@ -28,12 +28,12 @@ module Seory
     end
 
     def lookup(controller)
-      definition = repositories.detect {|definition| definition.match?(controller) }
-      Seory::Runtime.new(definition, controller)
+      page_contents = repositories.detect {|page| page.match?(controller) }
+      Seory::Runtime.new(page_contents, controller)
     end
 
     def match(*conditions, &def_builder)
-      repositories << DefinitionBuilder.new(*conditions).build!(&def_builder)
+      repositories << PageContentsBuilder.new(*conditions).build!(&def_builder)
     end
 
     def default(&def_builder)
