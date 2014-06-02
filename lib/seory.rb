@@ -1,5 +1,6 @@
 require "seory/version"
 
 module Seory
-  # Your code goes here...
+  class Error < RuntimeError
+  end
 end

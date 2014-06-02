@@ -1,7 +1,14 @@
+require 'seory'
+require 'active_support/all'
+
 module Seory
+  class EmptyCondition < ::Seory::Error; end
+
   class Definition
-    def initialize(match = nil)
-      @match       = match
+    def initialize(*conditions, &block)
+      @conditions  = block_given? ? block : conditions
+      raise EmptyCondition if @conditions.blank?
+
       @definitions = {}
     end
 
@@ -14,9 +21,13 @@ module Seory
     end
 
     def match?(controller)
-      return true if @match == :default
+      return true if @conditions == [:default]
 
-      @match == action_slug(controller)
+      if @conditions.respond_to?(:call)
+        @conditions.call(controller)
+      else
+        @conditions.include?(action_slug(controller))
+      end
     end
 
     private
