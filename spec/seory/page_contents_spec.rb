@@ -28,7 +28,7 @@ describe Seory::PageContents do
     end
   end
 
-  context 'lookup' do
+  describe 'condition and #match?' do
     def init_with(*args, &block)
       Seory::PageContents.new(*args, &block)
     end
