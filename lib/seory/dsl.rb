@@ -1,5 +1,5 @@
+require 'seory'
 require 'seory/page_contents'
-require 'seory/runtime'
 require 'seory/repository'
 
 module Seory
@@ -25,7 +25,7 @@ module Seory
         @page_contents
       end
 
-      Seory::Runtime::CONTENTS.each do |name|
+      Seory::CONTENTS.each do |name|
         define_method(name) do |val = nil, &block|
           @page_contents.define(name, val, &block)
         end

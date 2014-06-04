@@ -1,3 +1,5 @@
+require 'seory/runtime'
+
 module Seory
   class Repository
     def initialize
