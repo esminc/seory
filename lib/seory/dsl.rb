@@ -1,19 +1,17 @@
 require 'seory/page_contents'
 require 'seory/runtime'
+require 'seory/repository'
 
 module Seory
   module Dsl
-    extend self
 
     def describe(&block)
-      [].tap do |repositories|
-        Descriptor.new(repositories).instance_exec(&block)
-      end
+      @repository = Repository.new
+      Descriptor.new(@repository).describe(&block)
     end
 
     def lookup(controller)
-      page_contents = repositories.detect {|page| page.match?(controller) }
-      Seory::Runtime.new(page_contents, controller)
+      @repository.lookup(controller)
     end
 
     class PageContentsBuilder
@@ -35,12 +33,18 @@ module Seory
     end
 
     class Descriptor
-      def initialize(repositories)
-        @repositories = repositories
+      def initialize(repository)
+        @repository = repository
+      end
+
+      def describe(&block)
+        instance_exec(&block)
+
+        @repository
       end
 
       def match(*conditions, &def_builder)
-        @repositories << PageContentsBuilder.new(*conditions).build!(&def_builder)
+        @repository << PageContentsBuilder.new(*conditions).build!(&def_builder)
       end
 
       def default(&def_builder)
