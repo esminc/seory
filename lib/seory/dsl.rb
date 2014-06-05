@@ -25,10 +25,12 @@ module Seory
         @page_contents
       end
 
+      def misc(name, val = nil, &block)
+        @page_contents.define(name, val, &block)
+      end
+
       Seory::CONTENTS.each do |name|
-        define_method(name) do |val = nil, &block|
-          @page_contents.define(name, val, &block)
-        end
+        define_method(name) {|val = nil, &block| misc(name, val, &block) }
       end
     end
 

@@ -12,8 +12,12 @@ module Seory
       @controller    = controller
     end
 
+    def misc(name)
+      calculate_content_for(name)
+    end
+
     Seory::CONTENTS.each do |name|
-      define_method(name) { calculate_content_for(name) }
+      define_method(name) { misc(name) }
     end
 
     private
