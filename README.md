@@ -1,6 +1,6 @@
 # seory
 
-Manage SEO contets in Rails app. based on controller, action and more complex context.
+Manage SEO contents in Rails app. based on controller, action and more complex context.
 
 ## Installation
 
