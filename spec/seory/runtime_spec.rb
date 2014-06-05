@@ -36,4 +36,14 @@ describe Seory::Runtime do
       specify { expect(seory.title).to eq 'EDIT | My Site' }
     end
   end
+
+  context 'Access controller assigns(instance variables)' do
+    before do
+      allow(controller).to receive(:view_assigns).and_return('products' => [:products] * 42)
+
+      page_contents.define(:title) { "Good Shop with #{assigns(:products).size} products!" }
+    end
+
+    specify { expect(seory.title).to eq 'Good Shop with 42 products!' }
+  end
 end
