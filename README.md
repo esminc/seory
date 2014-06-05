@@ -45,9 +45,9 @@ match ->(controller) { controller.params[:page].to_i == 1 }, {
   end
 }
 
-# [TODO] Use custom word part
+# Use custom word part
 match %w[products#index] do
-  page_name { "#{page_part} Good products") }
+  misc(:page_name) { "#{controller.params[:page].to_i} page | Good products") }
 
   title  :page_name
   h1     :page_name

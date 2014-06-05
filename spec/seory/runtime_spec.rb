@@ -46,4 +46,16 @@ describe Seory::Runtime do
 
     specify { expect(seory.title).to eq 'Good Shop with 42 products!' }
   end
+
+  context 'Custom content created by misc()' do
+    before do
+      page_contents.define(:custom, 'custom variable')
+
+      page_contents.define(:title) { misc(:custom).upcase }
+    end
+
+    specify 'it was also accessible from other content' do
+      expect(seory.title).to eq 'CUSTOM VARIABLE'
+    end
+  end
 end
