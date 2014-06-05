@@ -58,4 +58,15 @@ describe Seory::Runtime do
       expect(seory.title).to eq 'CUSTOM VARIABLE'
     end
   end
+
+  context 'defined aliased content' do
+    before do
+      page_contents.define(:title) { 'A title' }
+      page_contents.define(:h1, :title)
+    end
+
+    specify 'it was also accessible from other content' do
+      expect(seory.h1).to eq 'A title'
+    end
+  end
 end

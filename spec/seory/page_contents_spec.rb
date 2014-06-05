@@ -26,6 +26,16 @@ describe Seory::PageContents do
 
       specify { expect(seory_def.content_for(:title).call).to eq 'A title' }
     end
+
+    context 'define aliased content' do
+      before do
+        seory_def.define(:title) { 'A title' }
+
+        seory_def.define(:h1, :title)
+      end
+
+      specify { expect(seory_def.content_for(:h1)).to eq :title }
+    end
   end
 
   describe 'condition and #match?' do

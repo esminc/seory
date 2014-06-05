@@ -32,6 +32,8 @@ module Seory
       case page_content = lookup_content_for(name)
       when String
         page_content
+      when Symbol
+        calculate_content_for(page_content)
       when ->(o) { o.respond_to?(:call) }
         instance_exec(&page_content)
       else
