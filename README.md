@@ -69,6 +69,7 @@ module ApplicationHelper
   # which returns Seory::Runtime object with configured
   include Seory::Helper
 end
+```
 
 ```haml
 %html
