@@ -15,6 +15,7 @@ describe Seory::Dsl do
       default do
         title 'Misc site'
         h1    { controller.controller_name.upcase }
+        h2    'default h2'
 
         misc(:option) { "dynamic option name at #{controller.controller_name}" }
       end
@@ -29,6 +30,8 @@ describe Seory::Dsl do
     specify { expect(seory.title).to eq 'My Great Product' }
     specify { expect(seory.h1).to eq 'Great Product Name' }
     specify { expect(seory.misc(:option)).to eq 'static optional val' }
+
+    specify { expect(seory.h2).to eq 'default h2' }
   end
 
   context 'at misc#show' do

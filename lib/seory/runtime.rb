@@ -8,9 +8,10 @@ module Seory
 
     attr_reader :controller
 
-    def initialize(page_contents, controller)
+    def initialize(page_contents, controller, fallback = nil)
       @page_contents = page_contents
       @controller    = controller
+      @fallback      = fallback
     end
 
     def assigns(name)
@@ -28,7 +29,7 @@ module Seory
     private
 
     def calculate_content_for(name)
-      case page_content = @page_contents.content_for(name)
+      case page_content = lookup_content_for(name)
       when String
         page_content
       when ->(o) { o.respond_to?(:call) }
@@ -36,6 +37,11 @@ module Seory
       else
         raise 'BUG'
       end
+    end
+
+    def lookup_content_for(name)
+      @page_contents.content_for(name) || \
+      @fallback.try {|fb| fb.content_for(name) }
     end
   end
 end

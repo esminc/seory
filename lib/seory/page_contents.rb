@@ -21,13 +21,17 @@ module Seory
     end
 
     def match?(controller)
-      return true if @conditions == [:default]
+      return true if default?
 
       if @conditions.respond_to?(:call)
         @conditions.call(controller)
       else
         @conditions.include?(action_slug(controller))
       end
+    end
+
+    def default?
+      @conditions == [:default]
     end
 
     private
