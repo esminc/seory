@@ -8,11 +8,15 @@ describe Seory::Dsl do
       match 'products#index' do
         title 'My Great Product'
         h1    'Great Product Name'
+
+        misc :option, 'static optional val'
       end
 
       default do
         title 'Misc site'
         h1    { controller.controller_name.upcase }
+
+        misc(:option) { "dynamic option name at #{controller.controller_name}" }
       end
     end
   end
@@ -24,11 +28,13 @@ describe Seory::Dsl do
 
     specify { expect(seory.title).to eq 'My Great Product' }
     specify { expect(seory.h1).to eq 'Great Product Name' }
+    specify { expect(seory.misc(:option)).to eq 'static optional val' }
   end
 
   context 'at misc#show' do
     let(:controller) { double('controller', controller_name: 'misc', action_name: 'show') }
 
     specify { expect(seory.h1).to eq 'MISC' }
+    specify { expect(seory.misc(:option)).to eq 'dynamic option name at misc' }
   end
 end
