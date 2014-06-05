@@ -33,14 +33,15 @@ match %w[products#popular products#new_release], {
 
 # Can contain dynamic content based on controller using assigned ivar
 match 'brands#show' {
-  title: -> { assign(:brand).name }
+  title { assign(:brand).name }
 }
 
 # Custom lookup rule with controller
 match ->(controller) { controller.params[:page].to_i == 1 }, {
-  keywords: -> do
+  keywords do
     search = assign(:search_object)
 
+    # do something
   end
 }
 
@@ -60,7 +61,7 @@ default do
 end
 ```
 
-Then we can use seory in your application.
+Then we can use seory in your application.[TODO]
 ```ruby
 module ApplicationHelper
 
