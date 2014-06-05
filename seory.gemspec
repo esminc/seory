@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["moronatural@gmail.com"]
   spec.summary       = %q{SEO contents manager for Rails.}
   spec.description   = %q{Manage SEO contets in Rails app. based on controller, action and more complex context.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/esminc/seory"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
