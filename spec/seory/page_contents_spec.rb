@@ -68,5 +68,36 @@ describe Seory::PageContents do
         expect(page_contents.match?(controller)).to be_truthy
       end
     end
+
+    describe 'hash conditions' do
+      let(:controller) { double('controller', params: params.with_indifferent_access) }
+
+      context 'when the condition exactly equals the params' do
+        let(:params) { { "controller" => 'users', "action" => 'show' } }
+        let(:condition) { { controller: 'users', action: 'show' } }
+
+        specify do
+          expect(init_with(condition).match?(controller)).to be_truthy
+        end
+      end
+
+      context 'when the condition is a sub-hash of the params' do
+        let(:params) { { "controller" => 'users', "action" => 'show', "id" => "123" } }
+        let(:condition) { { controller: 'users', action: 'show' } }
+
+        specify do
+          expect(init_with(condition).match?(controller)).to be_truthy
+        end
+      end
+
+      context 'when the condition differs with the params' do
+        let(:params) { { "controller" => 'users', "action" => 'show' } }
+        let(:condition) { { controller: 'users', action: 'index' } }
+
+        specify do
+          expect(init_with(condition).match?(controller)).to be_falsy
+        end
+      end
+    end
   end
 end

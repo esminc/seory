@@ -26,7 +26,14 @@ module Seory
       if @conditions.respond_to?(:call)
         @conditions.call(controller)
       else
-        @conditions.include?(action_slug(controller))
+        @conditions.any? do |condition|
+          case condition
+          when Hash
+            controller.params.slice(*condition.keys).symbolize_keys == condition
+          else
+            action_slug(controller) == condition
+          end
+        end
       end
     end
 
