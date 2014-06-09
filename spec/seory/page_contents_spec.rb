@@ -99,5 +99,23 @@ describe Seory::PageContents do
         end
       end
     end
+
+    describe 'proc conditions' do
+      let(:page_content) do
+        init_with {|c| c.controller_name == 'users' }
+      end
+
+      specify 'match UsersController' do
+        allow(controller).to receive(:controller_name) { 'users' }
+
+        expect(page_content.match?(controller)).to be_truthy
+      end
+
+      specify 'not match GoodsController' do
+        allow(controller).to receive(:controller_name) { 'goods' }
+
+        expect(page_content.match?(controller)).to be_falsy
+      end
+    end
   end
 end

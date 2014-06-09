@@ -5,6 +5,10 @@ describe Seory::Dsl do
   let(:seory_class) { Object.new.extend(Seory::Dsl) }
   before do
     seory_class.describe do
+      match ->(c) { c.controller_name == 'reports' } do
+        title 'Useful reports'
+      end
+
       match 'products#index' do
         title 'My Great Product'
         h1    'Great Product Name'
@@ -23,6 +27,12 @@ describe Seory::Dsl do
   end
 
   subject(:seory) { seory_class.lookup(controller) }
+
+  context 'at reports#index / match with proc' do
+    let(:controller) { double('controller', controller_name: 'reports', action_name: 'index') }
+
+    specify { expect(seory.title).to eq 'Useful reports' }
+  end
 
   context 'at products#index' do
     let(:controller) { double('controller', controller_name: 'products', action_name: 'index') }

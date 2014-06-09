@@ -16,7 +16,12 @@ module Seory
 
     class PageContentsBuilder
       def initialize(*conditions)
-        @page_contents = PageContents.new(*conditions)
+        @page_contents =
+          if conditions.size == 1 && (block = conditions.first).is_a?(Proc)
+            PageContents.new(&block)
+          else
+            PageContents.new(*conditions)
+          end
       end
 
       def build!(&block)
