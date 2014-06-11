@@ -8,7 +8,13 @@ module Seory
 
   class PageContents
     def initialize(*conditions, &block)
-      @conditions  = block_given? ? block : conditions
+      @conditions  =
+        if block_given?
+          [PageCondition::BlockCondition.new(block)]
+        else
+          conditions.map {|condition| Seory::PageCondition[condition] }
+        end
+
       raise EmptyCondition if @conditions.blank?
 
       @contents = {}
@@ -25,17 +31,11 @@ module Seory
     def match?(controller)
       return true if default?
 
-      if @conditions.respond_to?(:call)
-        @conditions.call(controller)
-      else
-        @conditions.
-          map {|condition| Seory::PageCondition.suppose(condition) }.
-          any? {|condition| condition.match?(controller) }
-      end
+      @conditions.any? {|condition| condition.match?(controller) }
     end
 
     def default?
-      @conditions == [:default]
+      @conditions.all? {|c| c.is_a?(Seory::PageCondition::DefaultCondition) }
     end
   end
 end
