@@ -1,4 +1,6 @@
 require 'seory'
+require 'seory/page_condition'
+
 require 'active_support/all'
 
 module Seory
@@ -26,25 +28,14 @@ module Seory
       if @conditions.respond_to?(:call)
         @conditions.call(controller)
       else
-        @conditions.any? do |condition|
-          case condition
-          when Hash
-            controller.params.slice(*condition.keys).symbolize_keys == condition
-          else
-            action_slug(controller) == condition
-          end
-        end
+        @conditions.
+          map {|condition| Seory::PageCondition.suppose(condition) }.
+          any? {|condition| condition.match?(controller) }
       end
     end
 
     def default?
       @conditions == [:default]
-    end
-
-    private
-
-    def action_slug(controller)
-      [controller.controller_name, controller.action_name].join('#')
     end
   end
 end
