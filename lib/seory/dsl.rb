@@ -1,5 +1,6 @@
 require 'seory'
 require 'seory/page_contents'
+require 'Seory/page_condition/build_dsl'
 require 'seory/repository'
 
 module Seory
@@ -40,6 +41,8 @@ module Seory
     end
 
     class Descriptor
+      include Seory::PageCondition::BuildDsl
+
       def initialize(repository)
         @repository = repository
       end

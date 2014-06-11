@@ -2,6 +2,7 @@ require 'seory'
 require 'seory/page_condition/block_condition'
 require 'seory/page_condition/default_condition'
 require 'seory/page_condition/params_condition'
+require 'seory/page_condition/path_condition'
 require 'seory/page_condition/slug_condition'
 
 module Seory
