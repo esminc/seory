@@ -1,6 +1,6 @@
 require 'seory'
 require 'seory/page_contents'
-require 'Seory/page_condition/build_dsl'
+require 'seory/page_condition/build_dsl'
 require 'seory/repository'
 
 module Seory
