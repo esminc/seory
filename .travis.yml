@@ -3,3 +3,7 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.1
+notifications:
+  webhooks:
+    - https://idobata.io/hook/061179f9-4f3c-4c8c-bdf9-4efa9821c5c5
+
