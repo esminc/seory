@@ -51,7 +51,7 @@ match(->(controller) { controller.params[:page].to_i == 1 }) do
 end
 
 # Use custom word part
-match slug(products#index) do
+match slug('products#index') do
   misc(:page_name) { "#{controller.params[:page].to_i} page | Good products") }
 
   title  :page_name
