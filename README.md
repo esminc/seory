@@ -22,7 +22,7 @@ Specify SEO content as ruby code.  For example, `config/initializers/seory.rb`
 
 ```ruby
 # Specify SEO content based on `controller#action` rule
-match %w[products#popular products#new_release], {
+match *%w[products#popular products#new_release] {
   title:    'Great products | My Great Site[MGS]'
   desc:     'A lot of greate products'
 
@@ -32,21 +32,26 @@ match %w[products#popular products#new_release], {
 }
 
 # Can contain dynamic content based on controller using assigned ivar
-match 'brands#show' {
+match slug('brands#show') {
   title { assign(:brand).name }
 }
 
+# Match with request fullpath
+match path('/products/special-product') do
+  title 'Special Product Detail'
+end
+
 # Custom lookup rule with controller
-match ->(controller) { controller.params[:page].to_i == 1 }, {
+match(->(controller) { controller.params[:page].to_i == 1 }) do
   keywords do
     search = assign(:search_object)
 
     # do something
   end
-}
+end
 
 # Use custom word part
-match %w[products#index] do
+match slug(products#index) do
   misc(:page_name) { "#{controller.params[:page].to_i} page | Good products") }
 
   title  :page_name

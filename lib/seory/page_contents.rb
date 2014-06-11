@@ -1,4 +1,6 @@
 require 'seory'
+require 'seory/page_condition'
+
 require 'active_support/all'
 
 module Seory
@@ -6,7 +8,13 @@ module Seory
 
   class PageContents
     def initialize(*conditions, &block)
-      @conditions  = block_given? ? block : conditions
+      @conditions  =
+        if block_given?
+          [PageCondition::BlockCondition.new(block)]
+        else
+          conditions.map {|condition| Seory::PageCondition[condition] }
+        end
+
       raise EmptyCondition if @conditions.blank?
 
       @contents = {}
@@ -23,28 +31,11 @@ module Seory
     def match?(controller)
       return true if default?
 
-      if @conditions.respond_to?(:call)
-        @conditions.call(controller)
-      else
-        @conditions.any? do |condition|
-          case condition
-          when Hash
-            controller.params.slice(*condition.keys).symbolize_keys == condition
-          else
-            action_slug(controller) == condition
-          end
-        end
-      end
+      @conditions.any? {|condition| condition.match?(controller) }
     end
 
     def default?
-      @conditions == [:default]
-    end
-
-    private
-
-    def action_slug(controller)
-      [controller.controller_name, controller.action_name].join('#')
+      @conditions.all? {|c| c.is_a?(Seory::PageCondition::DefaultCondition) }
     end
   end
 end
