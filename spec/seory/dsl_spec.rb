@@ -53,6 +53,24 @@ describe Seory::Dsl do
     end
   end
 
+  context 'accessor to assign' do
+    let(:seory_class) { Object.new.extend(Seory::Dsl) }
+    let(:controller) do
+      controller_double('products#show') { @product = OpenStruct.new(name: 'seory') }
+    end
+
+    before do
+      seory_class.describe do
+        match slug('products#show') do
+          assign_reader :product
+          title { product.name }
+        end
+      end
+    end
+
+    specify { expect(seory.title).to eq 'seory' }
+  end
+
   context 'with matcher build dsl syntax' do
     let(:seory_class) { Object.new.extend(Seory::Dsl) }
     before do
