@@ -26,9 +26,9 @@ describe Seory::Runtime do
   end
 
   context 'controller based dynamic content' do
-    before do
-      allow(controller).to receive(:action_name) { 'edit' }
+    let(:controller) { controller_double('foo#edit') }
 
+    before do
       page_contents.define(:title) { "#{action_name.upcase} | My Site" }
     end
 
@@ -38,9 +38,11 @@ describe Seory::Runtime do
   end
 
   context 'Access controller assigns(instance variables)' do
-    before do
-      allow(controller).to receive(:view_assigns).and_return('products' => [:products] * 42)
+    let(:controller) do
+      controller_double('foo#bar') { @products = [:products] * 42 }
+    end
 
+    before do
       page_contents.define(:title) { "Good Shop with #{assigns(:products).size} products!" }
     end
 
