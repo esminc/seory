@@ -1,5 +1,8 @@
 # seory
 
+[![Build Status](https://travis-ci.org/esminc/seory.svg?branch=master)](https://travis-ci.org/esminc/seory)
+[![Code Climate](https://codeclimate.com/github/esminc/seory.png)](https://codeclimate.com/github/esminc/seory)
+
 Manage SEO contents in Rails app. based on controller, action and more complex context.
 
 ## Installation
