@@ -22,19 +22,19 @@ Specify SEO content as ruby code.  For example, `config/initializers/seory.rb`
 
 ```ruby
 # Specify SEO content based on `controller#action` rule
-match *%w[products#popular products#new_release] {
-  title:    'Great products | My Great Site[MGS]'
-  desc:     'A lot of greate products'
+match *%w[products#popular products#new_release] do
+  title            'Great products | My Great Site[MGS]'
+  meta_description 'A lot of great products'
 
-  keywords: %w[Software Internet Service]
+  meta_keywords    %w[Software Internet Service].join(',')
 
-  h1:       'Most popular products'
-}
+  h1               'Most popular products'
+end
 
 # Can contain dynamic content based on controller using assigned ivar
-match slug('brands#show') {
-  title { assign(:brand).name }
-}
+match slug('brands#show') do
+  title { assigns(:brand).name }
+end
 
 # Match with request fullpath
 match path('/products/special-product') do
@@ -43,8 +43,8 @@ end
 
 # Custom lookup rule with controller
 match(->(controller) { controller.params[:page].to_i == 1 }) do
-  keywords do
-    search = assign(:search_object)
+  meta_keywords do
+    search = assigns(:search_object)
 
     # do something
   end
@@ -54,15 +54,15 @@ end
 match slug('products#index') do
   misc(:page_name) { "#{controller.params[:page].to_i} page | Good products") }
 
-  title  :page_name
-  h1     :page_name
+  title :page_name
+  h1    :page_name
 
-  desc   { "Page for #{page_name}" }
+  meta_description { "Page for #{page_name}" }
 }
 
 default do
-  title  'My Great Service'
-  h1     { I18n.t("#{controller_name}.h1", scope: 'label.misc_pages' }
+  title 'My Great Service'
+  h1    { I18n.t("#{controller_name}.h1", scope: 'label.misc_pages' }
 end
 ```
 
