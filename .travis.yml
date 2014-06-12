@@ -3,6 +3,8 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.1
+env:
+  - CODECLIMATE_REPO_TOKEN=455f919bd4213280fb9b5f9f5ee2395c6088e76593b0ae2c720d5edf24f31457
 notifications:
   webhooks:
     - https://idobata.io/hook/061179f9-4f3c-4c8c-bdf9-4efa9821c5c5
