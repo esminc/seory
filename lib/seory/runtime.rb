@@ -13,7 +13,7 @@ module Seory
       @controller    = controller
       @fallback      = fallback
 
-      extend build_assign_alias_module(@page_contents.assign_name_aliases)
+      extend build_assign_accessor_module(@page_contents.assign_name_accessors)
     end
 
     def assigns(name)
@@ -48,7 +48,7 @@ module Seory
       @fallback.try {|fb| fb.content_for(name) }
     end
 
-    def build_assign_alias_module(names)
+    def build_assign_accessor_module(names)
       Module.new do
         Array(names).each do |name|
           define_method(name) { assigns(name) }

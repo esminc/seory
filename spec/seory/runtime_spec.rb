@@ -48,9 +48,9 @@ describe Seory::Runtime do
 
     specify { expect(seory.title).to eq 'Good Shop with 42 products!' }
 
-    context 'define aliases in assigns() accesss' do
+    context 'define accesssor to assigns() value' do
       before do
-        page_contents.alias_assigns(:products)
+        page_contents.assign_reader(:products)
         page_contents.define(:h1) { "See #{products.size} products." }
       end
 
@@ -60,8 +60,8 @@ describe Seory::Runtime do
     context 'cannnot alias reserved name' do
       specify do
         expect {
-          page_contents.alias_assigns(:title)
-        }.to raise_error(Seory::AliasNameTaken)
+          page_contents.assign_reader(:title)
+        }.to raise_error(Seory::AccessorNameTaken)
       end
     end
   end
