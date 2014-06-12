@@ -26,9 +26,9 @@ describe Seory::Runtime do
   end
 
   context 'controller based dynamic content' do
-    before do
-      allow(controller).to receive(:action_name) { 'edit' }
+    let(:controller) { controller_double('foo#edit') }
 
+    before do
       page_contents.define(:title) { "#{action_name.upcase} | My Site" }
     end
 
@@ -38,13 +38,32 @@ describe Seory::Runtime do
   end
 
   context 'Access controller assigns(instance variables)' do
-    before do
-      allow(controller).to receive(:view_assigns).and_return('products' => [:products] * 42)
+    let(:controller) do
+      controller_double('foo#bar') { @products = [:products] * 42 }
+    end
 
+    before do
       page_contents.define(:title) { "Good Shop with #{assigns(:products).size} products!" }
     end
 
     specify { expect(seory.title).to eq 'Good Shop with 42 products!' }
+
+    context 'define accesssor to assigns() value' do
+      before do
+        page_contents.assign_reader(:products)
+        page_contents.define(:h1) { "See #{products.size} products." }
+      end
+
+      specify { expect(seory.h1).to eq 'See 42 products.' }
+    end
+
+    context 'cannnot alias reserved name' do
+      specify do
+        expect {
+          page_contents.assign_reader(:title)
+        }.to raise_error(Seory::AccessorNameTaken)
+      end
+    end
   end
 
   context 'Custom content created by misc()' do

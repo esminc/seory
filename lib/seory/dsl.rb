@@ -35,6 +35,10 @@ module Seory
         @page_contents.define(name, val, &block)
       end
 
+      def assign_reader(*names)
+        @page_contents.assign_reader(*names)
+      end
+
       Seory::CONTENTS.each do |name|
         define_method(name) {|val = nil, &block| misc(name, val, &block) }
       end

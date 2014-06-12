@@ -5,8 +5,12 @@ require 'active_support/all'
 
 module Seory
   class EmptyCondition < ::Seory::Error; end
+  class AccessorNameTaken < ::Seory::Error; end
 
   class PageContents
+
+    attr_reader :assign_name_accessors
+
     def initialize(*conditions, &block)
       @conditions  =
         if block_given?
@@ -17,11 +21,19 @@ module Seory
 
       raise EmptyCondition if @conditions.blank?
 
-      @contents = {}
+      @contents, @assign_name_accessors = {}, []
     end
 
     def define(name, value = nil, &block)
       @contents[name] = block_given? ? block : value
+    end
+
+    def assign_reader(*assign_names)
+      if (taken = Seory::CONTENTS & assign_names).size > 0
+        raise AccessorNameTaken, taken.join(', ')
+      end
+
+      assign_name_accessors.concat(assign_names)
     end
 
     def content_for(name)

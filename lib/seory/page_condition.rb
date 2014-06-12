@@ -23,10 +23,10 @@ module Seory
     private
 
     def suppose(condition)
-      klass = [ParamsCondition, SlugCondition].detect {|klass| klass.supposable?(condition) }
-      raise SupposionFailed.new(condition.inspect) unless klass
+      condition_class = [ParamsCondition, SlugCondition].detect {|klass| klass.supposable?(condition) }
+      raise SupposionFailed.new(condition.inspect) unless condition_class
 
-      klass.new(condition)
+      condition_class.new(condition)
     end
   end
 end
