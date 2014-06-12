@@ -43,13 +43,13 @@ describe Seory::PageContents do
       Seory::PageContents.new(*args, &block)
     end
 
-    let(:controller) { double('controller', controller_name: 'people', action_name: 'index') }
+    let(:controller) { double('controller', controller_path: 'people', action_name: 'index') }
 
     specify '`:default` matches everything (stacked in bottom)' do
       expect(init_with(:default)).to be_match(double('something'))
     end
 
-    describe 'controller_name#action_name' do
+    describe 'controller_path#action_name' do
       specify do
         expect(init_with('people#index').match?(controller)).to be_truthy
       end
@@ -63,7 +63,7 @@ describe Seory::PageContents do
       end
 
       specify do
-        page_contents = init_with {|c| c.controller_name == 'people' }
+        page_contents = init_with {|c| c.controller_path == 'people' }
 
         expect(page_contents.match?(controller)).to be_truthy
       end
@@ -102,17 +102,17 @@ describe Seory::PageContents do
 
     describe 'proc conditions' do
       let(:page_content) do
-        init_with {|c| c.controller_name == 'users' }
+        init_with {|c| c.controller_path == 'users' }
       end
 
       specify 'match UsersController' do
-        allow(controller).to receive(:controller_name) { 'users' }
+        allow(controller).to receive(:controller_path) { 'users' }
 
         expect(page_content.match?(controller)).to be_truthy
       end
 
       specify 'not match GoodsController' do
-        allow(controller).to receive(:controller_name) { 'goods' }
+        allow(controller).to receive(:controller_path) { 'goods' }
 
         expect(page_content.match?(controller)).to be_falsy
       end

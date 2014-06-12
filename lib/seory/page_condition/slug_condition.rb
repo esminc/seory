@@ -14,8 +14,10 @@ module Seory
         action_slug(controller) == @slug
       end
 
+      private
+
       def action_slug(controller)
-        [controller.controller_name, controller.action_name].join('#')
+        [controller.controller_path, controller.action_name].join('#')
       end
     end
   end

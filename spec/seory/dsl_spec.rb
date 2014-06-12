@@ -30,13 +30,13 @@ describe Seory::Dsl do
     end
 
     context 'at reports#index / match with proc' do
-      let(:controller) { double('controller', controller_name: 'reports', action_name: 'index') }
+      let(:controller) { double('controller', controller_name: 'reports', controller_path: 'reports', action_name: 'index') }
 
       specify { expect(seory.title).to eq 'Useful reports' }
     end
 
     context 'at products#index' do
-      let(:controller) { double('controller', controller_name: 'products', action_name: 'index') }
+      let(:controller) { double('controller', controller_name: 'products', controller_path: 'products', action_name: 'index') }
 
       specify { expect(seory.title).to eq 'My Great Product' }
       specify { expect(seory.h1).to eq 'Great Product Name' }
@@ -46,7 +46,7 @@ describe Seory::Dsl do
     end
 
     context 'at misc#show' do
-      let(:controller) { double('controller', controller_name: 'misc', action_name: 'show') }
+      let(:controller) { double('controller', controller_name: 'misc', controller_path: 'misc', action_name: 'show') }
 
       specify { expect(seory.h1).to eq 'MISC' }
       specify { expect(seory.misc(:option)).to eq 'dynamic option name at misc' }
@@ -69,7 +69,7 @@ describe Seory::Dsl do
 
     context 'at products#show' do
       let(:controller) do
-        double('controller', controller_name: 'products', action_name: 'show', params: {id: 42}).tap do |c|
+        double('controller', controller_name: 'products', controller_path: 'products', action_name: 'show', params: {id: 42}).tap do |c|
           allow(c).to receive_message_chain(:request, :fullpath) { '/products/42' }
         end
       end
