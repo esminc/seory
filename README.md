@@ -24,7 +24,7 @@ Specify SEO content as ruby code.  For example, `config/initializers/seory.rb`
 # Specify SEO content based on `controller#action` rule
 match *%w[products#popular products#new_release] do
   title            'Great products | My Great Site[MGS]'
-  meta_description 'A lot of greate products'
+  meta_description 'A lot of great products'
 
   meta_keywords    %w[Software Internet Service].join(',')
 
