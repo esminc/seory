@@ -47,6 +47,23 @@ describe Seory::Runtime do
     end
 
     specify { expect(seory.title).to eq 'Good Shop with 42 products!' }
+
+    context 'define aliases in assigns() accesss' do
+      before do
+        page_contents.alias_assigns(:products)
+        page_contents.define(:h1) { "See #{products.size} products." }
+      end
+
+      specify { expect(seory.h1).to eq 'See 42 products.' }
+    end
+
+    context 'cannnot alias reserved name' do
+      specify do
+        expect {
+          page_contents.alias_assigns(:title)
+        }.to raise_error(Seory::AliasNameTaken)
+      end
+    end
   end
 
   context 'Custom content created by misc()' do
