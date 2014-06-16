@@ -12,8 +12,8 @@ module Seory
       @store = Hash.new {|h, k| h[k] = Array.new }
     end
 
-    def [](group_name)
-      @store[group_name]
+    def add(group_name, page_contents)
+      @store[group_name] << page_contents
     end
 
     def lookup(controller)

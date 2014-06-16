@@ -17,7 +17,8 @@ module Seory
       end
 
       def match(*conditions, &def_builder)
-        @repository[@group_name] << PageContentsBuilder.new(*conditions).build!(&def_builder)
+        page_contents = PageContentsBuilder.new(*conditions).build!(&def_builder)
+        @repository.add(@group_name, page_contents)
       end
 
       def default(&def_builder)
