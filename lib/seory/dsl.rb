@@ -3,8 +3,8 @@ require 'seory/repository'
 
 module Seory
   module Dsl
-    def describe(&block)
-      Descriptor.new(seory_repository).describe(&block)
+    def describe(group_name = Repository.extract_label_from_trace(caller), &block)
+      Descriptor.new(group_name, seory_repository).describe(&block)
     end
     alias seo_content describe
 

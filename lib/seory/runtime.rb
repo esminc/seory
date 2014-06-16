@@ -6,7 +6,7 @@ module Seory
   class Runtime
     delegate :action_name, to: :controller
 
-    attr_reader :controller
+    attr_reader :page_contents, :controller
 
     def initialize(page_contents, controller, fallback = nil)
       @page_contents = page_contents

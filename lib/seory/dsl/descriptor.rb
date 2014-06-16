@@ -5,7 +5,8 @@ module Seory
     class Descriptor
       include Seory::PageCondition::BuildDsl
 
-      def initialize(repository)
+      def initialize(group_name, repository)
+        @group_name = group_name
         @repository = repository
       end
 
@@ -16,7 +17,7 @@ module Seory
       end
 
       def match(*conditions, &def_builder)
-        @repository << PageContentsBuilder.new(*conditions).build!(&def_builder)
+        @repository[@group_name] << PageContentsBuilder.new(*conditions).build!(&def_builder)
       end
 
       def default(&def_builder)

@@ -7,7 +7,7 @@ describe Seory::Dsl do
   context 'with traditional syntax' do
     let(:seory_class) { Object.new.extend(Seory::Dsl) }
     before do
-      seory_class.describe do
+      seory_class.describe('Group A') do
         match ->(c) { c.controller_name == 'reports' } do
           title 'Useful reports'
         end
@@ -33,6 +33,10 @@ describe Seory::Dsl do
       let(:controller) { double('controller', controller_name: 'reports', controller_path: 'reports', action_name: 'index') }
 
       specify { expect(seory.title).to eq 'Useful reports' }
+
+      specify do
+        expect(seory_class.send(:seory_repository)['Group A']).to include(seory.page_contents)
+      end
     end
 
     context 'at products#index' do
