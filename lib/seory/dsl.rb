@@ -4,12 +4,18 @@ require 'seory/repository'
 module Seory
   module Dsl
     def describe(&block)
-      @repository = Repository.new
-      Descriptor.new(@repository).describe(&block)
+      Descriptor.new(seory_repository).describe(&block)
     end
+    alias seo_content describe
 
     def lookup(controller)
-      @repository.lookup(controller)
+      seory_repository.lookup(controller)
+    end
+
+    private
+
+    def seory_repository
+      @__seory_repository ||= Repository.new
     end
 
     autoload :PageContentsBuilder, 'seory/dsl/page_contents_builder'
