@@ -7,7 +7,7 @@ module Seory
   class EmptyCondition < ::Seory::Error; end
   class AccessorNameTaken < ::Seory::Error; end
 
-  class PageContents
+  class Page
 
     attr_reader :assign_name_accessors
 

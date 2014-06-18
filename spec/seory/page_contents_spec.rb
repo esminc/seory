@@ -1,14 +1,14 @@
 require 'spec_helper'
 require 'seory/page_contents'
 
-describe Seory::PageContents do
+describe Seory::Page do
   specify 'cant define without condition' do
-    expect { Seory::PageContents.new }.to raise_error(Seory::EmptyCondition)
+    expect { Seory::Page.new }.to raise_error(Seory::EmptyCondition)
   end
 
-  context 'content PageContents' do
+  context 'content Page' do
     let(:seory_def) do
-      Seory::PageContents.new(:default)
+      Seory::Page.new(:default)
     end
 
     context 'define static content' do
@@ -40,7 +40,7 @@ describe Seory::PageContents do
 
   describe 'condition and #match?' do
     def init_with(*args, &block)
-      Seory::PageContents.new(*args, &block)
+      Seory::Page.new(*args, &block)
     end
 
     let(:controller) { double('controller', controller_path: 'people', action_name: 'index') }

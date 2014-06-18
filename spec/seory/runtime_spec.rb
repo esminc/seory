@@ -8,7 +8,7 @@ describe Seory::Runtime do
   end
 
   let(:controller) { double('controller') }
-  let(:page_contents) { Seory::PageContents.new(:default) }
+  let(:page_contents) { Seory::Page.new(:default) }
 
   context 'static content' do
     before do
