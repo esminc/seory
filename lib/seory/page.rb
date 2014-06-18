@@ -15,6 +15,8 @@ module Seory
       @conditions  =
         if block_given?
           [Condition::Block.new(block)]
+        elsif conditions.first == :default
+          :default
         else
           conditions.map {|condition| Seory::Condition[condition] }
         end
@@ -47,7 +49,7 @@ module Seory
     end
 
     def default?
-      @conditions.all? {|c| c.is_a?(Seory::Condition::Default) }
+      @conditions == :default
     end
   end
 end

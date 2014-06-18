@@ -1,6 +1,5 @@
 require 'seory'
 require 'seory/condition/block'
-require 'seory/condition/default'
 require 'seory/condition/params'
 require 'seory/condition/path'
 require 'seory/condition/slug'
@@ -11,9 +10,7 @@ module Seory
     extend self
 
     def [](condition)
-      if condition == :default
-        Default.new
-      elsif condition.respond_to?(:match?)
+      if condition.respond_to?(:match?)
         condition
       else
         suppose(condition)
