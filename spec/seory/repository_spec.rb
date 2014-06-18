@@ -47,5 +47,19 @@ describe Seory::Repository do
         expect(title_for('users#show', id: 42)).to eq 'other users'
       end
     end
+
+    context 'match controller by PageGroup#name sorted' do
+      before do
+        repository << (
+          Seory::Dsl::Descriptor.new('aaa', repository).describe do
+            match(params(controller: 'users')) { title 'defined after, match ahead' }
+          end
+        )
+      end
+
+      specify do
+        expect(title_for('users#show', id: 42)).to eq 'defined after, match ahead'
+      end
+    end
   end
 end

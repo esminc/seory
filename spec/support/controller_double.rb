@@ -21,6 +21,10 @@ module Seory
       @__slug.split('#').last
     end
 
+    def params
+      @params.merge(controller: controller_path, action: action_name)
+    end
+
     def view_assigns
       instance_variables.each_with_object({}) do |ivar, assigns|
         name = ivar.to_s

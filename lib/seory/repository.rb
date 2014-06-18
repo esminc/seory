@@ -14,28 +14,33 @@ module Seory
 
     def <<(page_group)
       remove_old_group!(page_group.name)
+      clear_page_order_pre_calculation!
 
       @page_groups << page_group
     end
 
     def lookup(controller)
-      page_contents = pages.detect {|page| page.match?(controller) }
+      page = pre_orderd_pages.detect {|pg| pg.match?(controller) }
 
-      Seory::Runtime.new(page_contents, controller, default)
+      Seory::Runtime.new(page, controller, default)
     end
 
     def default
-      pages.detect(&:default?)
+      pre_orderd_pages.detect(&:default?)
     end
 
     private
 
-    def pages
-      @page_groups.flat_map(&:pages)
+    def pre_orderd_pages
+      @pre_orderd_pages ||= @page_groups.sort_by(&:name).flat_map(&:pages)
     end
 
     def remove_old_group!(page_group_name)
       @page_groups.reject! {|pg| pg.name == page_group_name }
+    end
+
+    def clear_page_order_pre_calculation!
+      @pre_orderd_pages = nil
     end
   end
 end
