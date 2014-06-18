@@ -7,7 +7,7 @@ describe Seory::Dsl do
   context 'with traditional syntax' do
     let(:seory_class) { Object.new.extend(Seory::Dsl) }
     before do
-      seory_class.describe do
+      seory_class.describe('Group A') do
         match ->(c) { c.controller_name == 'reports' } do
           title 'Useful reports'
         end

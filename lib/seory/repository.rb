@@ -2,22 +2,34 @@ require 'seory/runtime'
 
 module Seory
   class Repository
-    def initialize
-      @store = []
+    class << self
+      def extract_label_from_trace(trace)
+        trace.first.split(':').first
+      end
     end
 
-    def <<(page_contents)
-      @store << page_contents
+    def initialize
+      @store = Hash.new {|h, k| h[k] = Array.new }
+    end
+
+    def add(group_name, page_contents)
+      @store[group_name] << page_contents
     end
 
     def lookup(controller)
-      page_contents = @store.detect {|page| page.match?(controller) }
+      page_contents = pages.detect {|page| page.match?(controller) }
 
       Seory::Runtime.new(page_contents, controller, default)
     end
 
     def default
-      @store.detect(&:default?)
+      pages.detect(&:default?)
+    end
+
+    private
+
+    def pages
+      @store.values.flatten
     end
   end
 end
