@@ -18,7 +18,7 @@ module Seory
       @__seory_repository ||= Repository.new
     end
 
-    autoload :PageContentsBuilder, 'seory/dsl/page_contents_builder'
-    autoload :Descriptor,          'seory/dsl/descriptor'
+    autoload :PageBuilder, 'seory/dsl/page_builder'
+    autoload :Descriptor,  'seory/dsl/descriptor'
   end
 end

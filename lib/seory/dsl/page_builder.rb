@@ -1,15 +1,15 @@
 require 'seory'
-require 'seory/page_contents'
+require 'seory/page'
 
 module Seory
   module Dsl
-    class PageContentsBuilder
+    class PageBuilder
       def initialize(*conditions)
         @page_contents =
           if conditions.size == 1 && (block = conditions.first).is_a?(Proc)
-            PageContents.new(&block)
+            Page.new(&block)
           else
-            PageContents.new(*conditions)
+            Page.new(*conditions)
           end
       end
 

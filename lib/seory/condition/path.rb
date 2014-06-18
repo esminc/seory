@@ -1,6 +1,6 @@
 module Seory
-  module PageCondition
-    class PathCondition
+  module Condition
+    class Path
       def initialize(path, exact_match = false)
         @path        = path
         @exact_match = exact_match

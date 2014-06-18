@@ -1,18 +1,18 @@
 require 'seory'
-require 'seory/page_condition/block_condition'
-require 'seory/page_condition/default_condition'
-require 'seory/page_condition/params_condition'
-require 'seory/page_condition/path_condition'
-require 'seory/page_condition/slug_condition'
+require 'seory/condition/block'
+require 'seory/condition/default'
+require 'seory/condition/params'
+require 'seory/condition/path'
+require 'seory/condition/slug'
 
 module Seory
-  module PageCondition
+  module Condition
     class SupposionFailed < Seory::Error; end
     extend self
 
     def [](condition)
       if condition == :default
-        DefaultCondition.new
+        Default.new
       elsif condition.respond_to?(:match?)
         condition
       else
@@ -23,7 +23,7 @@ module Seory
     private
 
     def suppose(condition)
-      condition_class = [ParamsCondition, SlugCondition].detect {|klass| klass.supposable?(condition) }
+      condition_class = [Params, Slug].detect {|klass| klass.supposable?(condition) }
       raise SupposionFailed.new(condition.inspect) unless condition_class
 
       condition_class.new(condition)

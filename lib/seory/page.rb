@@ -1,5 +1,5 @@
 require 'seory'
-require 'seory/page_condition'
+require 'seory/condition'
 
 require 'active_support/all'
 
@@ -7,16 +7,16 @@ module Seory
   class EmptyCondition < ::Seory::Error; end
   class AccessorNameTaken < ::Seory::Error; end
 
-  class PageContents
+  class Page
 
     attr_reader :assign_name_accessors
 
     def initialize(*conditions, &block)
       @conditions  =
         if block_given?
-          [PageCondition::BlockCondition.new(block)]
+          [Condition::Block.new(block)]
         else
-          conditions.map {|condition| Seory::PageCondition[condition] }
+          conditions.map {|condition| Seory::Condition[condition] }
         end
 
       raise EmptyCondition if @conditions.blank?
@@ -47,7 +47,7 @@ module Seory
     end
 
     def default?
-      @conditions.all? {|c| c.is_a?(Seory::PageCondition::DefaultCondition) }
+      @conditions.all? {|c| c.is_a?(Seory::Condition::Default) }
     end
   end
 end

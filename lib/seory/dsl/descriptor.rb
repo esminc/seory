@@ -1,9 +1,9 @@
-require 'seory/page_condition/build_dsl'
+require 'seory/condition/build_dsl'
 
 module Seory
   module Dsl
     class Descriptor
-      include Seory::PageCondition::BuildDsl
+      include Seory::Condition::BuildDsl
 
       def initialize(group_name, repository)
         @group_name = group_name
@@ -17,7 +17,7 @@ module Seory
       end
 
       def match(*conditions, &def_builder)
-        page_contents = PageContentsBuilder.new(*conditions).build!(&def_builder)
+        page_contents = PageBuilder.new(*conditions).build!(&def_builder)
         @repository.add(@group_name, page_contents)
       end
 

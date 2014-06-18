@@ -1,6 +1,6 @@
 module Seory
-  module PageCondition
-    class SlugCondition
+  module Condition
+    class Slug
       def self.supposable?(condition_object)
         controller, action = condition_object.to_s.split('#')
         controller && action
