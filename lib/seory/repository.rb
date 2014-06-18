@@ -9,11 +9,11 @@ module Seory
     end
 
     def initialize
-      @store = Hash.new {|h, k| h[k] = Array.new }
+      @page_groups = []
     end
 
-    def add(group_name, page_contents)
-      @store[group_name] << page_contents
+    def <<(page_group)
+      @page_groups << page_group
     end
 
     def lookup(controller)
@@ -29,7 +29,7 @@ module Seory
     private
 
     def pages
-      @store.values.flatten
+      @page_groups.flat_map(&:pages)
     end
   end
 end
