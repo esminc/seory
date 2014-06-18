@@ -80,9 +80,11 @@ describe Seory::Repository do
         expect(title_for('hoge#foo')).to eq 'default title'
       end
 
-      specify 'default can be specified from only one page group' do
+      specify 'default can be specified from only one page group or raise DuplicateDefault' do
         expect {
           repository << describe_page_group('duplicate default') { default { title 'duplicate default' } }
+
+          repository.lookup(controller_double('hi#index'))
         }.to raise_error(Seory::DuplicateDefault)
       end
     end
