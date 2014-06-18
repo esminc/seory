@@ -13,8 +13,8 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-if ENV['CODECLIMATE_REPO_TOKEN']
-  require "codeclimate-test-reporter"
+if ENV['CODECLIMATE_REPO_TOKEN'] && RUBY_VERSION.start_with?('2.1')
+  require 'codeclimate-test-reporter'
   CodeClimate::TestReporter.start
 end
 
