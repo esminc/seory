@@ -1,5 +1,5 @@
 require 'seory'
-require 'seory/page_condition'
+require 'seory/condition'
 
 require 'active_support/all'
 

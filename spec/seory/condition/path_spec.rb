@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'seory/page_condition/path_condition'
+require 'seory/condition/path'
 
 describe Seory::Condition::Path do
   let(:controller) { double('controller') }

@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'seory/page_condition/slug_condition'
+require 'seory/condition/slug'
 
 describe Seory::Condition::Slug do
   context 'with nested controller slug' do

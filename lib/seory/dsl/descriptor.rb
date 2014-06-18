@@ -1,4 +1,4 @@
-require 'seory/page_condition/build_dsl'
+require 'seory/condition/build_dsl'
 
 module Seory
   module Dsl

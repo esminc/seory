@@ -1,9 +1,9 @@
 require 'seory'
-require 'seory/page_condition/block_condition'
-require 'seory/page_condition/default_condition'
-require 'seory/page_condition/params_condition'
-require 'seory/page_condition/path_condition'
-require 'seory/page_condition/slug_condition'
+require 'seory/condition/block'
+require 'seory/condition/default'
+require 'seory/condition/params'
+require 'seory/condition/path'
+require 'seory/condition/slug'
 
 module Seory
   module Condition

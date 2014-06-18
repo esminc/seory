@@ -1,4 +1,4 @@
-require 'seory/page_condition'
+require 'seory/condition'
 
 module Seory
   module Condition
