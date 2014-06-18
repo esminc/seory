@@ -1,6 +1,8 @@
 require 'seory/runtime'
 
 module Seory
+  class DuplicateDefault < Seory::Error; end
+
   class Repository
     class << self
       def extract_label_from_trace(trace)
@@ -9,27 +11,43 @@ module Seory
     end
 
     def initialize
-      @store = Hash.new {|h, k| h[k] = Array.new }
+      @page_groups = []
     end
 
-    def add(group_name, page_contents)
-      @store[group_name] << page_contents
+    def <<(page_group)
+      remove_old_group!(page_group.name)
+
+      @page_groups << page_group
+
+      clear_page_order_pre_calculation!
     end
 
     def lookup(controller)
-      page_contents = pages.detect {|page| page.match?(controller) }
+      page = pre_orderd_pages.detect {|pg| pg.match?(controller) } || default
 
-      Seory::Runtime.new(page_contents, controller, default)
+      Seory::Runtime.new(page, controller, default)
     end
 
     def default
-      pages.detect(&:default?)
+      @default ||=
+        @page_groups.map(&:default).compact.tap {|defaults|
+          raise DuplicateDefault if defaults.size > 1
+        }.first
     end
 
     private
 
-    def pages
-      @store.values.flatten
+    def pre_orderd_pages
+      @pre_orderd_pages ||= @page_groups.sort_by(&:name).flat_map(&:pages)
+    end
+
+    def remove_old_group!(page_group_name)
+      @page_groups.reject! {|pg| pg.name == page_group_name }
+    end
+
+    def clear_page_order_pre_calculation!
+      @pre_orderd_pages = nil
+      @default = nil
     end
   end
 end
