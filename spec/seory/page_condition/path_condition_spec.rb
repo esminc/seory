@@ -1,10 +1,10 @@
 require 'spec_helper'
 require 'seory/page_condition/path_condition'
 
-describe Seory::PageCondition::PathCondition do
+describe Seory::Condition::Path do
   let(:controller) { double('controller') }
   let(:path_condition) do
-    Seory::PageCondition::PathCondition.new('/users/alice')
+    Seory::Condition::Path.new('/users/alice')
   end
 
   context 'Accessed to /users/alice (controller: users, action: show, id: alice)' do

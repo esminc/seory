@@ -3,7 +3,7 @@ require 'seory/page_condition/build_dsl'
 module Seory
   module Dsl
     class Descriptor
-      include Seory::PageCondition::BuildDsl
+      include Seory::Condition::BuildDsl
 
       def initialize(group_name, repository)
         @group_name = group_name

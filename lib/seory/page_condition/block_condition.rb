@@ -1,6 +1,6 @@
 module Seory
-  module PageCondition
-    class BlockCondition
+  module Condition
+    class Block
       def initialize(block)
         @block = block
       end

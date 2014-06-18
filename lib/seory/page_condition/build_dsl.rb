@@ -1,18 +1,18 @@
 require 'seory/page_condition'
 
 module Seory
-  module PageCondition
+  module Condition
     module BuildDsl
       def slug(slug)
-        SlugCondition.new(slug)
+        Slug.new(slug)
       end
 
       def path(path)
-        PathCondition.new(path)
+        Path.new(path)
       end
 
       def params(params)
-        ParamsCondition.new(params)
+        Params.new(params)
       end
     end
   end

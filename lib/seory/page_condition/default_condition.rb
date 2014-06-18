@@ -1,6 +1,6 @@
 module Seory
-  module PageCondition
-    class DefaultCondition
+  module Condition
+    class Default
       def match?(controller)
         true
       end

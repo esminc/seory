@@ -6,13 +6,13 @@ require 'seory/page_condition/path_condition'
 require 'seory/page_condition/slug_condition'
 
 module Seory
-  module PageCondition
+  module Condition
     class SupposionFailed < Seory::Error; end
     extend self
 
     def [](condition)
       if condition == :default
-        DefaultCondition.new
+        Default.new
       elsif condition.respond_to?(:match?)
         condition
       else
@@ -23,7 +23,7 @@ module Seory
     private
 
     def suppose(condition)
-      condition_class = [ParamsCondition, SlugCondition].detect {|klass| klass.supposable?(condition) }
+      condition_class = [Params, Slug].detect {|klass| klass.supposable?(condition) }
       raise SupposionFailed.new(condition.inspect) unless condition_class
 
       condition_class.new(condition)

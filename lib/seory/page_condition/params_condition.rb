@@ -1,6 +1,6 @@
 module Seory
-  module PageCondition
-    class ParamsCondition
+  module Condition
+    class Params
       def self.supposable?(condition_object)
         condition_object.is_a?(Hash)
       end
