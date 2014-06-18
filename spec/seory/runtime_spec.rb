@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'seory/runtime'
-require 'seory/page_contents'
+require 'seory/page'
 
 describe Seory::Runtime do
   let(:seory) do

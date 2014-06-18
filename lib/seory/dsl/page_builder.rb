@@ -1,5 +1,5 @@
 require 'seory'
-require 'seory/page_contents'
+require 'seory/page'
 
 module Seory
   module Dsl
