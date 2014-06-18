@@ -7,4 +7,17 @@ module Seory
   end
 
   autoload :Dsl, 'seory/dsl'
+
+  class << self
+    def describe(*args, &block)
+      @object ||= Object.new.tap {|obj| obj.extend Seory::Dsl }
+
+      @object.describe(*args, &block)
+    end
+    alias seo_content describe
+
+    def default_repository
+      @object.send(:seory_repository)
+    end
+  end
 end
