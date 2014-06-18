@@ -38,5 +38,14 @@ describe Seory::Repository do
       expect(title_for('products#show', id: 42)).to eq 'products'
     end
 
+    context 'overrides same name group' do
+      before do
+        repository << page_group('users', 'other users')
+      end
+
+      specify 'after one should be used' do
+        expect(title_for('users#show', id: 42)).to eq 'other users'
+      end
+    end
   end
 end

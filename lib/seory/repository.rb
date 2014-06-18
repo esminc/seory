@@ -13,6 +13,8 @@ module Seory
     end
 
     def <<(page_group)
+      remove_old_group!(page_group.name)
+
       @page_groups << page_group
     end
 
@@ -30,6 +32,10 @@ module Seory
 
     def pages
       @page_groups.flat_map(&:pages)
+    end
+
+    def remove_old_group!(page_group_name)
+      @page_groups.reject! {|pg| pg.name == page_group_name }
     end
   end
 end
