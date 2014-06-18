@@ -15,18 +15,22 @@ describe Seory::Repository do
     specify { expect(label).to eq __FILE__ }
   end
 
+  def title_for(*args)
+    repository.lookup(controller_double(*args)).title
+  end
+
+  def page_group(name, title = name)
+    describe_page_group(name) do
+      match(slug("#{name}#show")) { title title }
+    end
+  end
+
+  def describe_page_group(name, &block)
+    Seory::Dsl::Descriptor.new(name, repository).describe(&block)
+  end
+
   context 'has 2 page groups: users & products' do
     let(:repository) { Seory::Repository.new }
-
-    def page_group(name, title = name)
-      Seory::Dsl::Descriptor.new(name, repository).describe do
-        match(slug("#{name}#show")) { title title }
-      end
-    end
-
-    def title_for(*args)
-      repository.lookup(controller_double(*args)).title
-    end
 
     before do
       repository << page_group('users')
@@ -59,6 +63,27 @@ describe Seory::Repository do
 
       specify do
         expect(title_for('users#show', id: 42)).to eq 'defined after, match ahead'
+      end
+    end
+  end
+
+  describe 'default fallback' do
+    let(:repository) { Seory::Repository.new }
+
+    context 'default is used from any page group' do
+      before do
+        repository << page_group('users')
+        repository << describe_page_group('default') { default { title 'default title' } }
+      end
+
+      specify do
+        expect(title_for('hoge#foo')).to eq 'default title'
+      end
+
+      specify 'default can be specified from only one page group' do
+        expect {
+          repository << describe_page_group('duplicate default') { default { title 'duplicate default' } }
+        }.to raise_error(Seory::DuplicateDefault)
       end
     end
   end

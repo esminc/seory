@@ -1,6 +1,7 @@
 module Seory
   class PageGroup
-    attr_reader :name, :pages
+    attr_accessor :default
+    attr_reader   :name, :pages
 
     def initialize(name)
       @name  = name

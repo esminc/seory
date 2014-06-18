@@ -22,7 +22,7 @@ module Seory
       end
 
       def default(&def_builder)
-        match(:default, &def_builder)
+        @page_group.default = PageBuilder.new(:default).build!(&def_builder)
       end
     end
   end
