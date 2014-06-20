@@ -20,6 +20,10 @@ module Seory
     end
     alias seo_content describe
 
+    def helper(&block)
+      @object.helper(&block)
+    end
+
     def default_repository
       @object.send(:seory_repository)
     end

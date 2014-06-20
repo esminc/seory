@@ -8,6 +8,10 @@ module Seory
     end
     alias seo_content describe
 
+    def helper(&block)
+      seory_repository.helper = Module.new(&block)
+    end
+
     def lookup(controller)
       seory_repository.lookup(controller)
     end
