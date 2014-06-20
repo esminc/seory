@@ -1,8 +1,6 @@
 require 'seory'
 require 'seory/condition'
 
-require 'active_support/all'
-
 module Seory
   class EmptyCondition < ::Seory::Error; end
   class AccessorNameTaken < ::Seory::Error; end

@@ -1,5 +1,3 @@
-# TODO move somewhere
-require 'active_support/all'
 require 'seory'
 
 module Seory
