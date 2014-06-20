@@ -6,7 +6,8 @@ module Seory
   class Error < RuntimeError
   end
 
-  autoload :Dsl, 'seory/dsl'
+  autoload :Dsl,         'seory/dsl'
+  autoload :RailsHelper, 'seory/rails_helper'
 
   class << self
     def describe(*args, &block)
