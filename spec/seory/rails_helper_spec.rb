@@ -17,8 +17,12 @@ describe Seory::RailsHelper do
       match slug('products/reviews#index') do
         assign_reader :product
 
-        title { "Reviews for #{product.name}" }
+        title { "Reviews for #{bang(product.name)}" }
       end
+    end
+
+    Seory.helper do
+      def bang(string); string + ' !!!'; end
     end
   end
 
@@ -42,7 +46,7 @@ describe Seory::RailsHelper do
     end
 
     specify do
-      expect(context.seory.title).to eq "Reviews for a-computer"
+      expect(context.seory.title).to eq "Reviews for a-computer !!!"
     end
   end
 
