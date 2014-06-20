@@ -10,6 +10,8 @@ module Seory
       end
     end
 
+    attr_accessor :helper
+
     def initialize
       @page_groups = []
     end
@@ -25,7 +27,9 @@ module Seory
     def lookup(controller)
       page = pre_orderd_pages.detect {|pg| pg.match?(controller) } || default
 
-      Seory::Runtime.new(page, controller, default)
+      Seory::Runtime.new(page, controller, default).tap do |runtime|
+        runtime.extend helper if helper
+      end
     end
 
     def default

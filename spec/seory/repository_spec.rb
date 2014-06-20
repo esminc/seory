@@ -3,6 +3,8 @@ require 'seory/repository'
 require 'seory/dsl/descriptor'
 
 describe Seory::Repository do
+  let(:repository) { Seory::Repository.new }
+
   describe '.extract_label_from_trace' do
     let(:label) do
       begin
@@ -30,8 +32,6 @@ describe Seory::Repository do
   end
 
   context 'has 2 page groups: users & products' do
-    let(:repository) { Seory::Repository.new }
-
     before do
       repository << page_group('users')
       repository << page_group('products')
@@ -67,9 +67,20 @@ describe Seory::Repository do
     end
   end
 
-  describe 'default fallback' do
-    let(:repository) { Seory::Repository.new }
+  describe 'helper integration' do
+    before do
+      repository << describe_page_group('default') { default { title { upcase('title') }} }
+      repository.helper = Module.new do
+        def upcase(string); string.upcase; end
+      end
+    end
 
+    specify do
+      expect(title_for('hoge#foo')).to eq 'TITLE'
+    end
+  end
+
+  describe 'default fallback' do
     context 'default is used from any page group' do
       before do
         repository << page_group('users')
