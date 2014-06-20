@@ -4,7 +4,7 @@ rvm:
   - 2.0.0
   - 2.1
 env:
-  - CODECLIMATE_REPO_TOKEN=455f919bd4213280fb9b5f9f5ee2395c6088e76593b0ae2c720d5edf24f31457
+  - secure: "d3P4g1NRNxoCuhCHaqpNI6Khe6d/5jYpR0VJoxAvw5n2c46KuMn91IMTmTAF73vb7n8kQAXA347x53KBdgsBlmm6upaBKG8NrWiLgO16frTlmtUf1ng6VZzM3vqQjjo1YZLhM+kk3AoXgqZsSMwfgOo9BFQj6fYRwlveuJ+vrVM="
 notifications:
   webhooks:
     - https://idobata.io/hook/061179f9-4f3c-4c8c-bdf9-4efa9821c5c5
