@@ -21,63 +21,62 @@ Or install it yourself as:
 
 ## Usage
 
-Specify SEO content as ruby code.  For example, `config/initializers/seory.rb`
+Specify SEO content as ruby code.  For example, `config/seory/*.rb`
 
 ```ruby
-# Specify SEO content based on `controller#action` rule
-match *%w[products#popular products#new_release] do
-  title            'Great products | My Great Site[MGS]'
-  meta_description 'A lot of great products'
+# config/seory/products.rb
+Seory.seo_content 'products' do
+  # Specify SEO content based on `controller#action` rule
+  match *%w[products#popular products#new_release] do
+    title            'Great products | My Great Site[MGS]'
+    meta_description 'A lot of great products'
 
-  meta_keywords    %w[Software Internet Service].join(',')
+    meta_keywords    %w[Software Internet Service].join(',')
 
-  h1               'Most popular products'
-end
+    h1               'Most popular products'
+  end
 
-# Can contain dynamic content based on controller using assigned ivar
-match slug('brands#show') do
-  title { assigns(:brand).name }
-end
+  # Can contain dynamic content based on controller using assigned ivar
+  match slug('products#show') do
+    title { assigns(:brand).name }
+  end
 
-# Match with request fullpath
-match path('/products/special-product') do
-  title 'Special Product Detail'
-end
+  # Match with request fullpath
+  match path('/products/special-product') do
+    title 'Special Product Detail'
+  end
 
-# Custom lookup rule with controller
-match(->(controller) { controller.params[:page].to_i == 1 }) do
-  meta_keywords do
-    search = assigns(:search_object)
+  # Custom lookup rule with controller
+  match(->(controller) { controller.params[:page].to_i == 1 }) do
+    meta_keywords do
+      search = assigns(:search_object)
 
-    # do something
+      # do something
+    end
+  end
+
+  # Use custom word part
+  match slug('products#index') do
+    misc(:page_name) { "#{controller.params[:page].to_i} page | Good products") }
+
+    title :page_name
+    h1    :page_name
+
+    meta_description { "Page for #{page_name}" }
+  }
   end
 end
 
-# Use custom word part
-match slug('products#index') do
-  misc(:page_name) { "#{controller.params[:page].to_i} page | Good products") }
-
-  title :page_name
-  h1    :page_name
-
-  meta_description { "Page for #{page_name}" }
-}
-
-default do
-  title 'My Great Service'
-  h1    { I18n.t("#{controller_name}.h1", scope: 'label.misc_pages' }
+# config/seory/default.rb
+Seory.seo_content 'default' do
+  default do
+    title 'My Great Service'
+    h1    { I18n.t("#{controller_name}.h1", scope: 'label.misc_pages' }
+  end
 end
 ```
 
-Then we can use seory in your application.[TODO]
-```ruby
-module ApplicationHelper
-
-  # provides seory() method,
-  # which returns Seory::Runtime object with configured
-  include Seory::Helper
-end
-```
+Then we can use seory in your application.
 
 ```haml
 %html
