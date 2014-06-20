@@ -38,7 +38,9 @@ Seory.seo_content 'products' do
 
   # Can contain dynamic content based on controller using assigned ivar
   match slug('products#show') do
-    title { assigns(:brand).name }
+    assign_reader :product
+
+    title { product.name }
   end
 
   # Match with request fullpath
@@ -62,7 +64,7 @@ Seory.seo_content 'products' do
     title :page_name
     h1    :page_name
 
-    meta_description { "Page for #{page_name}" }
+    meta_description { "Page for #{misc(:page_name)}" }
   }
   end
 end
