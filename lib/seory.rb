@@ -8,10 +8,9 @@ module Seory
 
   autoload :Dsl,'seory/dsl'
 
-  mattr_accessor :config_dir
-  self.config_dir = 'config/seory'
-
   class << self
+    attr_accessor :config_dir
+
     def describe(*args, &block)
       @object ||= Object.new.tap {|obj| obj.extend Seory::Dsl }
 
@@ -23,4 +22,6 @@ module Seory
       @object.send(:seory_repository)
     end
   end
+
+  self.config_dir = 'config/seory'
 end
