@@ -24,10 +24,10 @@ module Seory
       clear_page_order_pre_calculation!
     end
 
-    def lookup(controller)
-      page = pre_orderd_pages.detect {|pg| pg.match?(controller) } || default
+    def lookup(view_context)
+      page = pre_orderd_pages.detect {|pg| pg.match?(view_context.controller) } || default
 
-      Seory::Runtime.new(page, controller, default).tap do |runtime|
+      Seory::Runtime.new(page, view_context, default).tap do |runtime|
         runtime.extend helper if helper
       end
     end
