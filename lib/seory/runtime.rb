@@ -23,6 +23,10 @@ module Seory
       calculate_content_for(name)
     end
 
+    def helper
+      @view_context
+    end
+
     Seory::CONTENTS.each do |name|
       define_method(name) { misc(name) }
     end
