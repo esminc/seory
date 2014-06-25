@@ -2,20 +2,21 @@ require 'seory'
 
 module Seory
   class Runtime
+    delegate :controller,  to: '@view_context'
     delegate :action_name, to: :controller
 
-    attr_reader :page_contents, :controller
+    attr_reader :page_contents
 
-    def initialize(page_contents, controller, fallback = nil)
+    def initialize(page_contents, view_context, fallback = nil)
       @page_contents = page_contents
-      @controller    = controller
+      @view_context  = view_context
       @fallback      = fallback
 
       extend build_assign_accessor_module(@page_contents.assign_name_accessors)
     end
 
     def assigns(name)
-      @controller.view_assigns[name.to_s]
+      controller.view_assigns[name.to_s]
     end
 
     def misc(name)

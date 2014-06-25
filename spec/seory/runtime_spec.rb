@@ -4,7 +4,8 @@ require 'seory/page'
 
 describe Seory::Runtime do
   let(:seory) do
-    Seory::Runtime.new(page_contents, controller)
+    view_context = double('context', controller: controller)
+    Seory::Runtime.new(page_contents, view_context)
   end
 
   let(:controller) { double('controller') }
