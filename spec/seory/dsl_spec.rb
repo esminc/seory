@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'seory/dsl'
 
 describe Seory::Dsl do
-  subject(:seory) { seory_class.lookup(controller) }
+  subject(:seory) { seory_class.lookup(Seory::ViewContextDouble.new(controller)) }
 
   context 'with traditional syntax' do
     let(:seory_class) { Object.new.extend(Seory::Dsl) }

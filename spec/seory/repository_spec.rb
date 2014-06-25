@@ -18,7 +18,7 @@ describe Seory::Repository do
   end
 
   def title_for(*args)
-    repository.lookup(controller_double(*args)).title
+    repository.lookup(view_context_double(*args)).title
   end
 
   def page_group(name, title = name)
@@ -95,7 +95,7 @@ describe Seory::Repository do
         expect {
           repository << describe_page_group('duplicate default') { default { title 'duplicate default' } }
 
-          repository.lookup(controller_double('hi#index'))
+          repository.lookup(view_context_double('hi#index'))
         }.to raise_error(Seory::DuplicateDefault)
       end
     end

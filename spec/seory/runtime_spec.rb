@@ -4,7 +4,8 @@ require 'seory/page'
 
 describe Seory::Runtime do
   let(:seory) do
-    Seory::Runtime.new(page_contents, controller)
+    view_context = double('context', controller: controller)
+    Seory::Runtime.new(page_contents, view_context)
   end
 
   let(:controller) { double('controller') }
@@ -87,5 +88,15 @@ describe Seory::Runtime do
     specify 'it was also accessible from other content' do
       expect(seory.h1).to eq 'A title'
     end
+  end
+
+  context 'Can call view_context methods' do
+    before do
+      page_contents.define(:title) { "#{helper.number_with_delimiter(10_000)} items" }
+
+      expect(seory.helper).to receive(:number_with_delimiter).with(10_000) { '10,000' }
+    end
+
+    specify { expect(seory.title).to eq '10,000 items' }
   end
 end
