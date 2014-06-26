@@ -4,7 +4,7 @@ module Seory
   class Helper
     module Dsl
       def rails_helper_methods(*args)
-        delegate *([args, to: :helper].flatten)
+        delegate(*args, {to: :helper})
       end
     end
 
