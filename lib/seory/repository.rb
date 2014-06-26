@@ -1,3 +1,4 @@
+require 'seory/helper'
 require 'seory/runtime'
 
 module Seory
@@ -28,7 +29,7 @@ module Seory
       page = pre_orderd_pages.detect {|pg| pg.match?(view_context.controller) } || default
 
       Seory::Runtime.new(page, view_context, default).tap do |runtime|
-        runtime.extend helper if helper
+        helper.try(:apply!, runtime)
       end
     end
 

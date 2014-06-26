@@ -1,7 +1,5 @@
 module Seory
   class ControllerDouble
-    attr_reader :params
-
     def initialize(slug, params = {}, &block)
       @__slug   = slug
       @params = params

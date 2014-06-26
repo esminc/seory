@@ -70,7 +70,7 @@ describe Seory::Repository do
   describe 'helper integration' do
     before do
       repository << describe_page_group('default') { default { title { upcase('title') }} }
-      repository.helper = Module.new do
+      repository.helper = Seory::Helper.new do
         def upcase(string); string.upcase; end
       end
     end
