@@ -7,7 +7,7 @@ describe Seory::RailsHelper do
       match slug('products#index') do
         title 'Product index'
 
-        og_image_url { helper.image_url('top-logo.png') }
+        og_image_url { image_url('top-logo.png') }
       end
 
       default do
@@ -24,6 +24,8 @@ describe Seory::RailsHelper do
     end
 
     Seory.helper do
+      rails_helper_methods :image_url
+
       def bang(string); string + ' !!!'; end
     end
   end

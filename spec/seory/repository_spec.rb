@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'seory/repository'
-require 'seory/dsl/descriptor'
+require 'seory/dsl'
 
 describe Seory::Repository do
   let(:repository) { Seory::Repository.new }
@@ -28,7 +28,7 @@ describe Seory::Repository do
   end
 
   def describe_page_group(name, &block)
-    Seory::Dsl::Descriptor.new(name, repository).describe(&block)
+    Seory::Dsl::PageGroupBuilder.new(name, repository).describe(&block)
   end
 
   context 'has 2 page groups: users & products' do
@@ -55,7 +55,7 @@ describe Seory::Repository do
     context 'match controller by PageGroup#name sorted' do
       before do
         repository << (
-          Seory::Dsl::Descriptor.new('aaa', repository).describe do
+          Seory::Dsl::PageGroupBuilder.new('aaa', repository).describe do
             match(params(controller: 'users')) { title 'defined after, match ahead' }
           end
         )
@@ -70,7 +70,7 @@ describe Seory::Repository do
   describe 'helper integration' do
     before do
       repository << describe_page_group('default') { default { title { upcase('title') }} }
-      repository.helper = Module.new do
+      repository.helper = Seory::Helper.new do
         def upcase(string); string.upcase; end
       end
     end
