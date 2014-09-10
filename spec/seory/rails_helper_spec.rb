@@ -3,6 +3,12 @@ require 'seory'
 
 describe Seory::RailsHelper do
   before do
+    Seory.helper do
+      rails_helper_methods :image_url
+
+      def bang(string); string + ' !!!'; end
+    end
+
     Seory.seo_content 'products' do
       match slug('products#index') do
         title 'Product index'
@@ -23,11 +29,6 @@ describe Seory::RailsHelper do
       end
     end
 
-    Seory.helper do
-      rails_helper_methods :image_url
-
-      def bang(string); string + ' !!!'; end
-    end
   end
 
   context 'GET /products' do
