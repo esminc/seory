@@ -14,18 +14,20 @@ module Seory
 
   class << self
     def describe(*args, &block)
-      @object ||= Object.new.tap {|obj| obj.extend Seory::Dsl }
-
-      @object.describe(*args, &block)
+      dsl_object.describe(*args, &block)
     end
     alias seo_content describe
 
     def helper(&block)
-      @object.helper(&block)
+      dsl_object.helper(&block)
     end
 
     def default_repository
-      @object.send(:seory_repository)
+      dsl_object.send(:seory_repository)
+    end
+
+    def dsl_object
+      @dsl_object ||= Object.new.tap {|obj| obj.extend Seory::Dsl }
     end
   end
 end
