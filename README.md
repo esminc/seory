@@ -21,6 +21,18 @@ Or install it yourself as:
 
 ## Usage
 
+To use seory, you need to include `Seory::RailsHelper` in your application.
+
+For example, `app/helpers/application_helper.rb`
+
+```ruby
+module ApplicationHelper
+  include Seory::RailsHelper
+
+  ...
+end
+```
+
 Specify SEO content as ruby code.  For example, `config/seory/*.rb`
 
 ```ruby
