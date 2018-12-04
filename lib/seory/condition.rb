@@ -10,7 +10,7 @@ module Seory
     extend self
 
     def [](condition)
-      if condition.respond_to?(:match?)
+      if condition.is_a?(Seory::Condition::Base)
         condition
       else
         suppose(condition)

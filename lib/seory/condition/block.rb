@@ -1,6 +1,8 @@
+require 'seory/condition/base'
+
 module Seory
   module Condition
-    class Block
+    class Block < Base
       def initialize(block)
         @block = block
       end
