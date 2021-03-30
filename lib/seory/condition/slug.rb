@@ -1,6 +1,8 @@
+require 'seory/condition/base'
+
 module Seory
   module Condition
-    class Slug
+    class Slug < Base
       def self.supposable?(condition_object)
         controller, action = condition_object.to_s.split('#')
         controller && action
