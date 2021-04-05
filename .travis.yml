@@ -1,11 +1,15 @@
 language: ruby
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1
+  - 2.6.6
+  - 2.7.2
+  - ruby-head
+
+jobs:
+  allow_failures:
+    - rvm: ruby-head
+
 env:
   - secure: "d3P4g1NRNxoCuhCHaqpNI6Khe6d/5jYpR0VJoxAvw5n2c46KuMn91IMTmTAF73vb7n8kQAXA347x53KBdgsBlmm6upaBKG8NrWiLgO16frTlmtUf1ng6VZzM3vqQjjo1YZLhM+kk3AoXgqZsSMwfgOo9BFQj6fYRwlveuJ+vrVM="
 notifications:
   webhooks:
     - https://idobata.io/hook/061179f9-4f3c-4c8c-bdf9-4efa9821c5c5
-
